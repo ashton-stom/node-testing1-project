@@ -8,7 +8,12 @@
  */
 function trimProperties(obj) {
   // ✨ implement
-}
+  let newObject = {};
+  Object.keys(obj).forEach(o => {
+    newObject[o] = obj[o].trim()
+  })
+  return newObject;
+};
 
 /**
  * [Exercise 2] trimPropertiesMutation trims in place the properties of an object
@@ -20,7 +25,11 @@ function trimProperties(obj) {
  */
 function trimPropertiesMutation(obj) {
   // ✨ implement
-}
+  Object.keys(obj).forEach(o => {
+    obj[o] = obj[o].trim()
+  })
+  return obj;
+};
 
 /**
  * [Exercise 3] findLargestInteger finds the largest integer in an array of objects { integer: 1 }
@@ -32,7 +41,14 @@ function trimPropertiesMutation(obj) {
  */
 function findLargestInteger(integers) {
   // ✨ implement
-}
+  let largest = Number.MIN_VALUE;
+  integers.forEach(i => {
+    if (i.integer > largest) {
+      largest = i.integer
+    }
+  })
+  return largest;
+};
 
 class Counter {
   /**
@@ -41,6 +57,7 @@ class Counter {
    */
   constructor(initialNumber) {
     // ✨ initialize whatever properties are needed
+    this.count = initialNumber + 1;
   }
 
   /**
@@ -57,8 +74,12 @@ class Counter {
    */
   countDown() {
     // ✨ implement
-  }
-}
+    if (this.count > 0) {
+      this.count--
+    }
+    return this.count;
+  };
+};
 
 class Seasons {
   /**
@@ -66,6 +87,8 @@ class Seasons {
    */
   constructor() {
     // ✨ initialize whatever properties are needed
+    this.seasons = ['spring', 'summer', 'fall', 'winter'];
+    this.current = 0;
   }
 
   /**
@@ -82,6 +105,8 @@ class Seasons {
    */
   next() {
     // ✨ implement
+    this.current++;
+    return this.seasons[this.current % 4]
   }
 }
 
@@ -94,8 +119,11 @@ class Car {
    */
   constructor(name, tankSize, mpg) {
     this.odometer = 0 // car initilizes with zero miles
-    this.tank = tankSize // car initiazes full of gas
+    this.tank = tankSize // car initializes full of gas
     // ✨ initialize whatever other properties are needed
+    this.name = name;
+    this.mpg = mpg;
+    this.tankSize = tankSize;
   }
 
   /**
@@ -113,7 +141,10 @@ class Car {
    */
   drive(distance) {
     // ✨ implement
-  }
+    this.odometer += distance;
+    this.tank = Math.max(0, this.tank - (distance / this.mpg))
+    return this.odometer;
+  };
 
   /**
    * [Exercise 6C] Adds gallons to the tank
@@ -128,7 +159,9 @@ class Car {
    */
   refuel(gallons) {
     // ✨ implement
-  }
+    this.tank = Math.min(this.tank + gallons,  this.tankSize)
+    return this.mpg * this.tank;
+  };
 }
 
 /**
@@ -152,6 +185,13 @@ class Car {
  */
 function isEvenNumberAsync(number) {
   // ✨ implement
+  return new Promise((res, rej) => {
+    if (typeof number == 'number' && !Number.isNaN(number)) {
+      res(number % 2 == 0)
+    } else {
+      rej({ message: 'number must be a number' })
+    }
+  })
 }
 
 module.exports = {
